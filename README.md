@@ -10,6 +10,7 @@ A high-performance, minimalist academic ecosystem designed specifically for engi
 
 ## Deployment & Backend
 
+- **Live Demo**: [engineeringwebsiteprojecttrack.vercel.app](https://engineeringwebsiteprojecttrack.vercel.app/)
 - **Deployment**: Hosted on **Vercel** for lightning-fast global delivery and seamless CI/CD.
 - **Database**: Powered by **Supabase** (PostgreSQL) for secure, real-time data persistence.
 - **Security**: Implements individual user authentication ensuring that every student's data is isolated and private.
