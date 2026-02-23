@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intania Archive | @ SATIT PSM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-md fixed-top bg-white border-bottom py-2">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand d-flex align-items-center me-2" href="#" onclick="goHome()">
+                <span class="fw-bold text-dark">Intania's Lab</span>
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon" style="width: 1.2em; height: 1.2em;"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+
+                <div class="ms-auto d-flex flex-column flex-md-row align-items-md-center mt-3 mt-md-0 gap-2">
+                    <div class="vr mx-2 d-none d-md-block"></div>
+                    <hr class="d-md-none my-2 text-muted">
+                    <button class="btn btn-dark btn-sm rounded-3 px-3 fw-medium" onclick="goHome()">
+                        <i class="bi bi-house-door-fill"></i> home
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="home-screen" class="pt-5 mt-4">
+        <div class="container">
+            <div class="row pt-5 mb-5 align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge bg-primary-subtle text-primary mb-3 px-3 py-2 rounded-pill fw-bold">v2.0
+                        Intania Archive</span>
+                    <h1 class="display-4 fw-black mb-3">Course Summary<br><span class="text-primary">@ Satit
+                            Prasarnmit</span></h1>
+                    <p class="text-secondary fs-5" style="max-width: 600px;">Lecture archive of an engineering student.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <div class="input-group input-group-lg shadow-sm border rounded-4 overflow-hidden bg-white">
+                        <span class="input-group-text border-0 bg-white ps-4"><i
+                                class="bi bi-terminal text-muted"></i></span>
+                        <input type="text" id="mainSearch" class="form-control border-0 no-focus py-3 fs-6"
+                            placeholder="Execute search for topics (e.g. 'Integrals')..." onkeyup="filterHomeTopics()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4" id="homeCards">
+                <div class="row g-4" id="homeCards">
+                    <div class="col-md-4 topic-card" data-title="math calculus algebra trigonometry">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 eng-card" onclick="loadLesson('math')">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div class="text-primary fs-3"><i class="bi bi-file-earmark-text"></i></div>
+                                    <span class="text-muted small fw-bold">01</span>
+                                </div>
+                                <h5 class="fw-bold mb-2">M.4 Mathematics</h5>
+                                <p class="text-muted small mb-0">Set, Logics, Real Number System, Geometry, Conic
+                                    Sections, and Functions.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <hr class="opacity-10">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="small fw-bold text-primary">Summary</span>
+                                    <i class="bi bi-chevron-right text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 topic-card" data-title="physics kinematics dynamics electricity">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 eng-card" onclick="loadLesson('physics')">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div class="text-primary fs-3"><i class="bi bi-gear-fill"></i></div>
+                                    <span class="text-muted small fw-bold">02</span>
+                                </div>
+                                <h5 class="fw-bold mb-2">M.4 Physics For Engineering</h5>
+                                <p class="text-muted small mb-0">Linear, Projectile, Circular Motion, Vector,
+                                    Equilibrium, Work, Energy, Power, Momentum, and Impulse.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <hr class="opacity-10">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="small fw-bold text-primary">Summary</span>
+                                    <i class="bi bi-chevron-right text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 topic-card" data-title="coding python c++ logic">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 eng-card" onclick="loadLesson('coding')">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div class="text-primary fs-3"><i class="bi bi-cpu-fill"></i></div>
+                                    <span class="text-muted small fw-bold">03</span>
+                                </div>
+                                <h5 class="fw-bold mb-2">Coding</h5>
+                                <p class="text-muted small mb-0">Python, C++, and Data Structures designed for
+                                    algorithmic problem solving.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <hr class="opacity-10">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="small fw-bold text-primary">Summary</span>
+                                    <i class="bi bi-chevron-right text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 topic-card" data-title="tool calendar schedule events archive">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 eng-card" onclick="handleCalendarAccess()"
+                            style="cursor: pointer;">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div class="text-danger fs-3"><i class="bi bi-calendar3"></i></div>
+                                    <span class="text-muted small fw-bold">TOOL</span>
+                                </div>
+                                <h5 class="fw-bold mb-2 text-dark">Event Calendar</h5>
+                                <p class="text-muted small mb-0">Manage your lab schedules and academic deadlines in one
+                                    place.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <hr class="opacity-10">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="small fw-bold text-danger">Access Calendar</span>
+                                    <i class="bi bi-lock-fill text-danger small" id="calendar-lock-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 topic-card" data-title="tool graph plotter function math">
+                        <a href="graphplot.html" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm rounded-4 eng-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start mb-4">
+                                        <div class="text-danger fs-3"><i class="bi bi-graph-up-arrow"></i></div>
+                                        <span class="text-muted small fw-bold">TOOL</span>
+                                    </div>
+                                    <h5 class="fw-bold mb-2 text-dark">Graph Plotter</h5>
+                                    <p class="text-muted small mb-0">Visualizing functions and plotting data points in
+                                        real-time.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                    <hr class="opacity-10">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="small fw-bold text-danger">Launch Tool</span>
+                                        <i class="bi bi-arrow-right text-danger"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 topic-card" data-title="tool math equation explorer punyo">
+                        <a href="https://punyopan.github.io/equation-explorer/" target="_blank"
+                            class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm rounded-4 eng-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start mb-4">
+                                        <div class="text-danger fs-3"><i class="bi bi-search"></i></div>
+                                        <span class="text-muted small fw-bold">TOOL</span>
+                                    </div>
+                                    <h5 class="fw-bold mb-2 text-dark">Equation Explorer</h5>
+                                    <p class="text-muted small mb-0">Interactive visualizer for mathematical equations
+                                        and functions.</p>
+                                    <p class="text-secondary fw-bold small mb-0">Created by: punyo</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                    <hr class="opacity-10">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="small fw-bold text-danger">Exit Current Site</span>
+                                        <i class="bi bi-box-arrow-up-right text-danger"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 topic-card" data-title="tool grade calculator gpa math">
+                        <a href="grade.html" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm rounded-4 eng-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start mb-4">
+                                        <div class="text-danger fs-3"><i class="bi bi-calculator-fill"></i></div>
+                                        <span class="text-muted small fw-bold">TOOL</span>
+                                    </div>
+                                    <h5 class="fw-bold mb-2 text-dark">Grade Calculator</h5>
+                                    <p class="text-muted small mb-0">Calculate GPA and track academic performance for
+                                        Satit PSM courses.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                    <hr class="opacity-10">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="small fw-bold text-danger">Launch Tool</span>
+                                        <i class="bi bi-arrow-right text-danger"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </main>
+
+    <main id="lesson-screen" class="hidden pt-5">
+        <div class="container-fluid px-lg-5 mt-5">
+            <div class="row g-4">
+                <aside class="col-lg-3">
+
+                    <div class="bg-white border rounded-4 p-3 shadow-sm">
+                        <div class="d-flex align-items-center mb-4 px-2">
+                            <i class="bi bi-folder2-open me-2 text-primary"></i>
+                            <h6 id="subject-sidebar-title" class="m-0 fw-bold text-uppercase small ls-tight">Explorer
+                            </h6>
+                        </div>
+                        <div class="list-group list-group-flush gap-1" id="topic-list">
+                        </div>
+                    </div>
+                </aside>
+
+                <section class="col-lg-9">
+                    <div class="workspace-header d-flex align-items-end justify-content-between mb-3 px-2">
+                        <div>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-1 small">
+                                    <li class="breadcrumb-item"><a href="#" onclick="goHome()">Hub</a></li>
+                                    <li class="breadcrumb-item active" id="breadcrumb-subject">Subject</li>
+                                </ol>
+                            </nav>
+                            <h2 id="topic-title" class="fw-black m-0">Topic Title</h2>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                        <div class="card-header bg-white border-bottom-0 pt-3">
+                            <ul class="nav nav-tabs border-0 gap-2" id="lessonTabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active rounded-top-3 border-0" data-bs-toggle="tab"
+                                        href="#tutorial">
+                                        <i class="bi bi-book me-2"></i>Guide
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link rounded-top-3 border-0" data-bs-toggle="tab" href="#explanation">
+                                        <i class="bi bi-journal-text me-2"></i>Theory
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link rounded-top-3 border-0" data-bs-toggle="tab" href="#practice">
+                                        <i class="bi bi-code-slash me-2"></i>Practice
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="tab-content p-4 min-vh-50 bg-white">
+                                <div class="tab-pane fade show active" id="tutorial"></div>
+                                <div class="tab-pane fade" id="explanation"></div>
+                                <div class="tab-pane fade" id="practice"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+
+    <footer class="bg-white border-top py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <h6 class="fw-bold mb-1">Created by</h6>
+                    <p class="text-secondary mb-0">Mr. Raphee Rattanamanoonporn "Ray"</p>
+                    <small class="text-muted">E-AI Major (Gen 07) @ Satit PSM</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-4 mt-md-0">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="mailto:raphee.rattanamanoonporn@gamil.com"
+                            class="btn btn-outline-dark btn-sm rounded-pill px-3">
+                            <i class="bi bi-envelope-fill me-2"></i>Contact
+                        </a>
+                        <a href="https://github.com/Ray0737" target="_blank"
+                            class="btn btn-dark btn-sm rounded-pill px-3">
+                            <i class="bi bi-github me-2"></i>GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <p class="text-muted small mb-0">&copy; 2026 Intania Archive. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Check if supabaseClient is defined in script.js, if not, initialize here
+        // const supabaseClient = supabase.createClient('URL', 'KEY');
+
+        function updateAuthUI(session) {
+            const loggedOut = document.getElementById('logged-out-view');
+            const loggedIn = document.getElementById('logged-in-view');
+            const navLogin = document.getElementById('nav-login-btn');
+            const navLogout = document.getElementById('nav-logout-btn');
+            const navUser = document.getElementById('user-info');
+            const displayEmail = document.getElementById('user-email-display');
+            const statusEmail = document.getElementById('status-email');
+
+            if (session) {
+                loggedOut.classList.add('d-none');
+                loggedIn.classList.remove('d-none');
+                navLogin.classList.add('d-none');
+                navLogout.classList.remove('d-none');
+                navUser.classList.remove('d-none');
+                displayEmail.innerText = session.user.email;
+                statusEmail.innerText = session.user.email;
+            } else {
+                loggedOut.classList.remove('d-none');
+                loggedIn.classList.add('d-none');
+                navLogin.classList.remove('d-none');
+                navLogout.classList.add('d-none');
+                navUser.classList.add('d-none');
+            }
+        }
+
+        // Listen for Auth Changes
+        if (typeof supabaseClient !== 'undefined') {
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                updateAuthUI(session);
+            });
+        }
+
+        async function handleLogout() {
+            if (typeof supabaseClient !== 'undefined') {
+                await supabaseClient.auth.signOut();
+                window.location.reload();
+            }
+        }
+
+        async function handleCalendarAccess() {
+            // 1. Check if Supabase client exists
+            if (typeof supabaseClient !== 'undefined') {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+
+                if (session) {
+                    // 2. If logged in, go to the calendar
+                    window.location.href = 'calendar.html';
+                } else {
+                    // 3. If not logged in, go to login
+                    // Tip: You could add ?redirect=calendar to the URL to return here later
+                    window.location.href = 'login.html';
+                }
+            } else {
+                // Fallback if supabase isn't loaded yet
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Update the lock icon based on auth status
+        function updateCalendarUI(session) {
+            const lockIcon = document.getElementById('calendar-lock-icon');
+            if (lockIcon) {
+                if (session) {
+                    lockIcon.classList.replace('bi-lock-fill', 'bi-arrow-right');
+                    lockIcon.classList.replace('text-muted', 'text-primary');
+                } else {
+                    lockIcon.classList.replace('bi-arrow-right', 'bi-lock-fill');
+                    lockIcon.classList.replace('text-primary', 'text-muted');
+                }
+            }
+        }
+
+        // Call this inside your existing onAuthStateChange listener
+        if (typeof supabaseClient !== 'undefined') {
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                updateAuthUI(session);
+                updateCalendarUI(session); // Add this line
+            });
+        }
+    </script>
+</body>
+
+</html>

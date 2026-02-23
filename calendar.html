@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive | Intania Lab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg-soft: #fafafa;
+            --border-thin: #eeeeee;
+            --text-main: #2d2d2d;
+            --accent: #000000;
+        }
+
+        body {
+            background-color: var(--bg-soft);
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        /* Minimalist Nav */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-thin) !important;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        /* Calendar Grid */
+        #calendarGrid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            min-height: 80vh;
+            background-color: transparent;
+            border-top: 1px solid var(--border-thin);
+            border-left: 1px solid var(--border-thin);
+        }
+
+        .calendar-header-day {
+            text-align: center;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 15px 0;
+            font-weight: 600;
+            color: #999;
+            border-right: 1px solid var(--border-thin);
+            border-bottom: 1px solid var(--border-thin);
+        }
+
+        .calendar-day {
+            background: #fff;
+            min-height: 120px;
+            padding: 12px !important;
+            border-right: 1px solid var(--border-thin);
+            border-bottom: 1px solid var(--border-thin);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .calendar-day:hover {
+            background-color: #fcfcfc;
+            z-index: 1;
+            box-shadow: inset 0 0 0 1px var(--accent);
+        }
+
+        /* Minimalist Pills */
+        .event-pill {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            border: none !important;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+
+        .bg-event {
+            background-color: #f1f1f1;
+            color: #555;
+        }
+
+        .bg-task {
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* Modal Styling */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: var(--accent);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+        }
+
+        .btn-group .btn {
+            border-color: #eee;
+            color: #999;
+        }
+
+        .btn-check:checked+.btn {
+            background-color: var(--accent) !important;
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .transition {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .hover-shadow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05) !important;
+            background-color: #fff;
+            border: 1px solid #eee;
+        }
+
+        #taskListView .card {
+            background: #ffffff;
+            border: 1px solid transparent;
+        }
+
+        /* Ensure the calendar grid header labels stay visible or hidden correctly */
+        .d-none {
+            display: none !important;
+        }
+
+        /* Card Interactivity */
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .transition {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hover-shadow:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+            background-color: #fff;
+        }
+
+        /* Scrollbar for the list container if it gets long */
+        #taskListView {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main id="home-screen" class="pt-5 mt-4">
+        <nav class="navbar navbar-expand-md fixed-top bg-white border-bottom py-2">
+            <div class="container-fluid px-3">
+                <a class="navbar-brand d-flex align-items-center me-2" href="#" onclick="goHome()">
+                    <span class="fw-bold text-dark">Intania's Lab</span>
+                </a>
+
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon" style="width: 1.2em; height: 1.2em;"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+
+                    <div class="ms-auto d-flex flex-column flex-md-row align-items-md-center mt-3 mt-md-0 gap-2">
+                        <div class="vr mx-2 d-none d-md-block"></div>
+                        <hr class="d-md-none my-2 text-muted">
+                        <span id="user-display" class="small d-none d-md-inline text-muted border-end pe-3 me-1"></span>
+                        <button class="btn btn-outline-dark btn-sm rounded-pill px-3"
+                            onclick="window.location.href='index.html'">
+                            <i class="bi bi-house-door me-1"></i> Hub
+                        </button>
+
+                        <button id="nav-logout-btn" class="btn btn-danger btn-sm rounded-pill px-3"
+                            onclick="handleLogout()">
+                            <i class="bi bi-power me-1"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row align-items-end mb-4">
+                <div class="col">
+                    <h1 id="monthDisplay" class="display-6 fw-bold mb-0">Month</h1>
+                </div>
+                <div class="col-auto">
+                    <div class="d-flex gap-2">
+                        <div class="btn-group rounded-3">
+                            <input type="radio" class="btn-check" name="filterType" id="allView" checked
+                                onclick="setFilter('all')">
+                            <label class="btn btn-sm px-3" for="allView">All</label>
+                            <input type="radio" class="btn-check" name="filterType" id="taskView"
+                                onclick="setFilter('task')">
+                            <label class="btn btn-sm px-3" for="taskView">Tasks</label>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="changeMonth(-1)"><i
+                                    class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="changeMonth(1)"><i
+                                    class="bi bi-chevron-right"></i></button>
+                        </div>
+                        <button class="btn btn-dark btn-sm px-3 rounded-3" data-bs-toggle="modal"
+                            data-bs-target="#entryModal">
+                            <i class="bi bi-plus"></i> ADD
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div id="calendarGrid" class="shadow-sm bg-white rounded-3"></div>
+
+                <div id="taskListView" class="d-none">
+                    <div class="row g-3" id="taskListContainer">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+        <div class="modal fade" id="entryModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-3">
+                    <div class="modal-header border-0">
+                        <h5 class="fw-bold">New Entry</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <input type="text" id="entryTitle" class="form-control" placeholder="Title">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <select id="entryType" class="form-select">
+                                    <option value="task">Task</option>
+                                    <option value="event">Event</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" id="entrySubject" class="form-control" placeholder="Subject">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="date" id="entryDate" class="form-control">
+                        </div>
+                        <div class="mb-0">
+                            <textarea id="entryNotes" class="form-control" rows="3" placeholder="Notes..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-primary w-100" onclick="saveEntry()">Create Entry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="detailModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span id="detailType"
+                                class="text-uppercase small fw-bold tracking-widest opacity-50"></span>
+                            <br><br>
+                            <h3 id="detailTitle" class="fw-bold mb-0"></h3>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="py-3 border-top border-bottom my-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="small text-muted mb-1">SUBJECT</label>
+                                <div id="detailSubject" class="fw-bold"></div>
+                            </div>
+                            <div class="col-6">
+                                <label class="small text-muted mb-1">DATE</label>
+                                <div id="detailDate" class="fw-bold"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="small text-muted mb-1">NOTES</label>
+                        <div id="detailNotes" class="small text-secondary"></div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-2">
+                        <button class="btn btn-primary btn-sm flex-grow-1" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-danger btn-sm px-3" id="deleteEntryBtn"><i
+                                class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-top py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <h6 class="fw-bold mb-1">Created by</h6>
+                    <p class="text-secondary mb-0">Mr. Raphee Rattanamanoonporn "Ray"</p>
+                    <small class="text-muted">E-AI Major (Gen 07) @ Satit PSM</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-4 mt-md-0">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="mailto:raphee.rattanamanoonporn@gamil.com"
+                            class="btn btn-outline-dark btn-sm rounded-pill px-3">
+                            <i class="bi bi-envelope-fill me-2"></i>Contact
+                        </a>
+                        <a href="https://github.com/Ray0737" target="_blank"
+                            class="btn btn-dark btn-sm rounded-pill px-3">
+                            <i class="bi bi-github me-2"></i>GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <p class="text-muted small mb-0">&copy; 2026 Intania Archive. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="auth.js"></script>
+    <script src="script2.js"></script>
+</body>
+
+</html>

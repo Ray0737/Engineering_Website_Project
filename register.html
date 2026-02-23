@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Intania Lab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-md fixed-top bg-white border-bottom py-2">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand d-flex align-items-center me-2" href="#" onclick="goHome()">
+                <span class="fw-bold text-dark">Intania's Lab</span>
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon" style="width: 1.2em; height: 1.2em;"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+
+                <div class="ms-auto d-flex flex-column flex-md-row align-items-md-center mt-3 mt-md-0 gap-2">
+                    <div class="vr mx-2 d-none d-md-block"></div>
+                    <hr class="d-md-none my-2 text-muted">
+                    <button class="btn btn-outline-dark btn-sm rounded-pill px-3"
+                        onclick="window.location.href='index.html'">
+                        <i class="bi bi-house-door me-1"></i> Home
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 p-md-5 shadow-sm" style="max-width: 450px; width: 95%;">
+            <h2 class="text-center fw-bold mb-4">Create Account</h2>
+
+            <div id="regMsg" class="alert d-none small py-2 mb-3 text-center rounded-3"></div>
+
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Email Address</label>
+                <input type="email" id="regEmail" class="form-control" placeholder="name@example.com">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label small fw-bold">Password</label>
+                <input type="password" id="regPass" class="form-control" placeholder="••••••••">
+                <div class="form-text mt-2" style="font-size: 0.75rem;">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Must include 8+ chars, 1 capital, 1 number, & 1 symbol (@$!%*?&).
+                </div>
+            </div>
+
+            <button id="regBtn" class="btn btn-primary w-100 rounded-pill fw-bold mt-4" onclick="handleRegister()">
+                Create Account
+            </button>
+
+            <div class="text-center mt-3">
+                <a href="login.html" class="small text-decoration-none"><i class="bi bi-arrow-left me-1"></i> Back to
+                    Login</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow rounded-4">
+                <div class="modal-body text-center p-5">
+                    <div class="text-success display-1 mb-3">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <h3 class="fw-bold">Registration Successful!</h3>
+                    <p class="text-secondary">Please check your email inbox to confirm your account before logging in.
+                    </p>
+                    <button type="button" class="btn btn-dark w-100 rounded-pill fw-bold mt-3"
+                        onclick="window.location.href='login.html'">
+                        Go to Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>
